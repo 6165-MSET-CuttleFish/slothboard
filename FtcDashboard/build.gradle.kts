@@ -1,7 +1,7 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 
 plugins {
-    id("com.github.node-gradle.node") version "2.2.4"
+    id("com.github.node-gradle.node") version "7.1.0"
     id("dev.frozenmilk.android-library") version "11.0.0-1.0.0"
     id("dev.frozenmilk.doc") version "0.0.5"
     id("dev.frozenmilk.build-meta-data") version "0.0.2"
@@ -16,15 +16,15 @@ checkstyle {
 }
 
 node {
-    version = "16.20.2"
-    download = true
-    nodeModulesDir = file("${project.projectDir}/../client")
+    version.set("18.12.1")
+    download.set(true)
+    nodeProjectDir.set(file("${project.projectDir}/../client"))
 }
 
-val yarnBuild = tasks.named("yarn_build")
-val yarnInstall = tasks.named("yarn_install")
-
-yarnBuild.dependsOn(yarnInstall)
+val yarnBuild by tasks.registering(com.github.gradle.node.yarn.task.YarnTask::class) {
+    args.set(listOf("build"))
+    dependsOn(tasks.named("yarn"))
+}
 
 val cleanDashAssets by tasks.registering(Delete::class) {
     delete("${android.sourceSets.getByName("main").assets.srcDirs.first()}/dash")
