@@ -8,6 +8,10 @@ includeBuild("DashboardCore") {
 	}
 }
 
-includeBuild("FtcDashboard")
+includeBuild("FtcDashboard") {
+	dependencySubstitution {
+		substitute(module("com.acmerobotics.slothboard:dashboard")).using(project(":"))
+	}
+}
 
 includeBuild("TeamCode")

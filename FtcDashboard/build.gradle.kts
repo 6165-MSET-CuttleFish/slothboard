@@ -16,7 +16,7 @@ checkstyle {
 }
 
 node {
-    version = "18.12.1"
+    version = "16.20.2"
     download = true
     nodeModulesDir = file("${project.projectDir}/../client")
 }
