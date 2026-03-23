@@ -367,7 +367,7 @@ public class HardwareOpMode extends OpMode {
         } else {
             return;
         }
-        
+
         if (newPosition != -1.0) {
             servo.setPosition(newPosition);
         }
