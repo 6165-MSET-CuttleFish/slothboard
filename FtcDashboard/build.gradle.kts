@@ -16,7 +16,7 @@ checkstyle {
 }
 
 node {
-    version.set("18.12.1")
+    version.set("16.20.2")
     download.set(true)
     nodeProjectDir.set(file("${project.projectDir}/../client"))
 }
