@@ -1,6 +1,6 @@
 plugins {
-	id("dev.frozenmilk.teamcode") version "10.3.0-0.1.4"
-	id("dev.frozenmilk.sinister.sloth.load") version "0.2.2"
+    id("dev.frozenmilk.teamcode") version "11.0.0-1.0.0"
+    id("dev.frozenmilk.sinister.sloth.load") version "0.2.4"
 }
 
 repositories {
@@ -8,14 +8,13 @@ repositories {
 }
 
 ftc {
-	// use this to easily add more FTC libraries
-
-	// adds support for kotlin
-	kotlin
+    kotlin()
+    sdk.TeamCode()
+    implementation(dairy.Sloth)
 }
 
 val slothboardVersion = findProperty("slothboard.version") as String? ?: "1.0.0"
 
 dependencies {
-	implementation("com.acmerobotics.slothboard:dashboard:$slothboardVersion")
+    implementation("com.acmerobotics.slothboard:dashboard:$slothboardVersion")
 }

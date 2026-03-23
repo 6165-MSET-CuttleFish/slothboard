@@ -1,5 +1,5 @@
 plugins {
-	id("dev.frozenmilk.jvm-library") version "10.2.0-0.1.3"
+	id("dev.frozenmilk.jvm-library") version "11.0.0-1.0.0"
 	id("dev.frozenmilk.doc") version "0.0.4"
 	id("org.gradle.checkstyle")
 	`maven-publish`
@@ -9,12 +9,8 @@ checkstyle {
 	toolVersion = "8.18"
 }
 
-repositories {
-	mavenCentral()
-}
-
 dependencies {
-	//noinspection GradleDependency
+	//noinspection NewerVersionAvailable
 	compileOnly("com.google.code.gson:gson:2.8.6")
 
 	testImplementation("com.google.code.gson:gson:2.8.6")
