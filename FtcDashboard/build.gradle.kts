@@ -59,22 +59,30 @@ ftc {
         compileOnly(FtcCommon)
         compileOnly(appcompat)
     }
-    dairy {
-        implementation(Sloth)
-    }
 }
 
 repositories {
     files("../libs")
+    // The Sloth runtime is consumed from the 6165-MSET-Cuttlefish fork
+    // (see https://github.com/6165-MSET-Cuttlefish/Sloth), which carries
+    // the audit fixes around lock-file coordination, classloader pinning,
+    // reflection guards, and bounded retry loops.
+    maven("https://jitpack.io")
 }
 
 group = findProperty("slothboard.group") as String? ?: "com.acmerobotics.slothboard"
 version = findProperty("slothboard.version") as String? ?: "1.0.0"
 
+// Pinned Sloth commit on the 6165 fork. Bump alongside any future audit
+// follow-ups in https://github.com/6165-MSET-Cuttlefish/Sloth.
+val slothRef = "9bcb914"
+
 dependencies {
     api("com.acmerobotics.slothboard:core:${version}") {
         isTransitive = false
     }
+
+    implementation("com.github.6165-MSET-Cuttlefish.Sloth:Sloth:$slothRef")
 
     implementation("org.nanohttpd:nanohttpd-websocket:2.3.1") {
         exclude(module = "nanohttpd")
