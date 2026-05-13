@@ -3,10 +3,6 @@ plugins {
     id("dev.frozenmilk.sinister.sloth.load") version "0.2.4"
 }
 
-repositories {
-	mavenLocal()
-}
-
 ftc {
     kotlin()
     sdk.TeamCode()
@@ -15,6 +11,8 @@ ftc {
 
 val slothboardVersion = findProperty("slothboard.version") as String? ?: "1.0.0"
 
+// The com.acmerobotics.slothboard:dashboard module is provided by the root
+// composite build's dependencySubstitution rule (see ../settings.gradle.kts).
 dependencies {
     implementation("com.acmerobotics.slothboard:dashboard:$slothboardVersion")
 }

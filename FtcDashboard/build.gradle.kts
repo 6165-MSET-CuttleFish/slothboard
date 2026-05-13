@@ -86,19 +86,23 @@ meta {
     name = "Dashboard"
     registerField("name", "String", "\"com.acmerobotics.slothboard.Dashboard\"")
 
-    // Use dynamic values based on git state
-    val gitBranch = providers.exec {
-        commandLine("git", "rev-parse", "--abbrev-ref", "HEAD")
-    }.standardOutput.asText.get().trim()
-
-    val gitClean = providers.exec {
+    // Lazily resolve git state at task execution, not configuration. This works
+    // under Gradle config-cache and on JitPack's detached HEAD checkout (where
+    // `git rev-parse --abbrev-ref HEAD` would otherwise return the literal
+    // "HEAD" if eagerly resolved).
+    val gitShaProvider = providers.exec {
+        commandLine("git", "rev-parse", "--short=8", "HEAD")
+    }.standardOutput.asText
+    val gitStatusProvider = providers.exec {
         commandLine("git", "status", "--porcelain")
-    }.standardOutput.asText.get().isEmpty()
+    }.standardOutput.asText
 
-    registerField("clean", "Boolean", "$gitClean")
-    registerField("gitRef", "String", "\"$gitBranch\"")
-    registerField("snapshot", "Boolean", "${version.toString().contains("SNAPSHOT", ignoreCase = true)}")
-    registerField("version", "String", "\"$version\"")
+    registerField("clean", "Boolean") { gitStatusProvider.get().isEmpty().toString() }
+    registerField("gitRef", "String") { "\"${gitShaProvider.get().trim()}\"" }
+    registerField("snapshot", "Boolean") {
+        version.toString().contains("SNAPSHOT", ignoreCase = true).toString()
+    }
+    registerField("version", "String") { "\"$version\"" }
 }
 
 publishing {

@@ -11,9 +11,7 @@ checkstyle {
 
 dependencies {
 	//noinspection NewerVersionAvailable
-	compileOnly("com.google.code.gson:gson:2.8.6")
-
-	testImplementation("com.google.code.gson:gson:2.8.6")
+	implementation("com.google.code.gson:gson:2.8.6")
 
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 
